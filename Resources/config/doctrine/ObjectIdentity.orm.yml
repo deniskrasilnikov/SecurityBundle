@@ -1,0 +1,24 @@
+Onixcat\Bundle\SecurityBundle\Entity\ObjectIdentity:
+    type: entity
+    table: onixcat_acl_object_identity
+    repositoryClass: Onixcat\Bundle\SecurityBundle\Entity\Repository\ObjectIdentityRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        identifier:
+            type: string
+        type:
+            type: string
+        entriesInheriting:
+            type: boolean
+        name:
+            type: string
+    oneToMany:
+        entries:
+            targetEntity: Entry
+            mappedBy: objectIdentity
+            cascade: ["persist"]

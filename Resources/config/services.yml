@@ -1,0 +1,51 @@
+services:
+    onixcat_security.acl_provider:
+        class: Onixcat\Bundle\SecurityBundle\Security\Acl\ORM\MutableAclProvider
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@security.acl.permission_granting_strategy"
+
+    onixcat_security.acl.resource.configuration:
+        class: Onixcat\Bundle\SecurityBundle\Security\Acl\Resource\ResourceConfiguration
+        arguments:
+            - "@router"
+            - "@kernel"
+            - "@=service('doctrine.orm.entity_manager').getRepository('OnixcatSecurityBundle:Role')"
+
+    onixcat_security.acl.resource.loader.yml:
+        class: Onixcat\Bundle\SecurityBundle\Security\Acl\Resource\Loader\YamlFileLoader
+        arguments:
+            - "@file_locator"
+        public: false
+
+    onixcat_security.acl.resource.resolver:
+        class: Symfony\Component\Config\Loader\LoaderResolver
+        arguments:
+            - ["@onixcat_security.acl.resource.loader.yml"]
+        public: false
+
+    onixcat_security.acl.resource.loader:
+        class: Symfony\Component\Config\Loader\DelegatingLoader
+        arguments:
+            - "@onixcat_security.acl.resource.resolver"
+        public: false
+
+    security.resource_provider:
+        alias: onixcat_security.acl.resource.provider
+
+    onixcat_security.acl.resource.provider:
+        class: Onixcat\Bundle\SecurityBundle\Security\Acl\Resource\ResourceProvider
+        arguments:
+            - "@onixcat_security.acl.resource.loader"
+            - "%onixcat_security.acl.resource%"
+            - "@onixcat_security.acl.resource.configuration"
+
+    onixcat_security.acl.voter.route_listener:
+        class: Onixcat\Bundle\SecurityBundle\Security\Acl\Voter\RouteResourceVoter
+        arguments:
+            - "@security.acl.provider"
+            - "@security.acl.security_identity_retrieval_strategy"
+            - "@security.acl.permission.map"
+            - '%onixcat_security.acl.pattern%'
+        tags:
+            - {name: security.voter}

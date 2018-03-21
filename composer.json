@@ -1,0 +1,33 @@
+{
+    "name": "onixcat/security-bundle",
+    "description": "Advanced security functionality for Symfony",
+    "type" : "symfony-bundle",
+    "license" : "MIT",
+    "keywords" : ["Symfony", "bundle", "security", "acl"],
+    "authors": [
+        {
+            "name": "Denis Krasilnikov",
+            "email" : "deniskrasilnikov86@gmail.com"
+        },
+        {
+            "name": "Yehor Denisenko",
+            "email" : "Ashbringer09@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "symfony/framework-bundle": "^3.3",
+        "symfony/security-bundle": "^3.3",
+        "symfony/security-acl": "^3.0",
+        "doctrine/common": "^2.7"
+    },
+    "autoload": {
+        "psr-4" : { "Onixcat\\Bundle\\SecurityBundle\\" : "" }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

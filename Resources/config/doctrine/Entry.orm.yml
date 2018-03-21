@@ -1,0 +1,37 @@
+Onixcat\Bundle\SecurityBundle\Entity\Entry:
+    type: entity
+    table: onixcat_acl_entry
+    repositoryClass: Onixcat\Bundle\SecurityBundle\Entity\Repository\EntryRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        aceOrder:
+            type: integer
+        mask:
+            type: integer
+        granting:
+            type: boolean
+        grantingStrategy:
+            type: string
+        auditSuccess:
+            type: boolean
+        auditFailure:
+            type: boolean
+        class:
+            type: string
+    manyToOne:
+        role:
+            targetEntity: Role
+            joinColumns:
+                role_id:
+                    referencedColumnName: id
+        objectIdentity:
+            targetEntity: ObjectIdentity
+            inversedBy: entries
+            joinColumns:
+                object_identity_id:
+                    referencedColumnName: id

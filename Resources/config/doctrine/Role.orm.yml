@@ -1,0 +1,17 @@
+Onixcat\Bundle\SecurityBundle\Entity\Role:
+    type: entity
+    table: onixcat_user_role
+    repositoryClass: Onixcat\Bundle\SecurityBundle\Entity\Repository\RoleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+            column: created_at
+        role:
+            type: string
+            unique: true
